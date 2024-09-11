@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Home page</h1>
+    {% if request.user.is_authenticated %}
+    <i>Salom <b>{{request.user.username}}</b></i>
+    <a href="{% url 'profile' %}">Profile</a>  |
+    <a href="{% url 'logout' %}">Chiqish</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>  |
+    <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+
+    <h2>Barcha postlar</h2>
+{% for post in posts %}
+    <img width="700px" src="{{post.image.url}}" >
+    <a href="{% url 'detail-post' post.id %}"><h4>{{post.title}}</h4></a>
+    <p>{{post.body|truncatewords:50}}</p>
+    <p>Category: <i>{{post.category.name}}</i></p>
+    <p>Author: <i>{{post.user.username}}</i></p>
+
+    <hr>
+{% endfor %}
+
+</body>
+</html>

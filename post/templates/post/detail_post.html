@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail post</title>
+</head>
+<body>
+
+<h1>Detail post</h1>
+{% if post.image %}
+<img width="700px" src="{{post.image.url}}" >
+{% endif %}
+<h4>{{post.title}}</h4>
+<p><b>Category:</b> <i>{{post.category.name}}  </i>
+<b>Tags:</b>
+
+{% for tag in post.tag.all %}
+    {% if forloop.last %}
+        <i>{{tag.name}}</i>
+    {% else %}
+        <i>{{tag.name}}</i>,
+{% endif %}
+{% endfor %}
+<p>{{post.body}}</p>
+
+<h3>Comments</h3>
+<form method="POST" action="">{% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Saqlash">
+</form>
+{% for comment in comments %}
+<p><b>Author:</b> <i>{{comment.user.username}}</i></p>
+<p><b>Comment:</b> {{comment.body}}</p>
+<hr>
+{% endfor %}
+</body>
+</html>
